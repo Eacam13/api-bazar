@@ -5,6 +5,7 @@ import cors from 'cors'
 import { router } from "./routes";
 import { AppError, errorHandler } from "./middlewares/errorHandler";
 import fileUpload from "express-fileupload";
+import { swaggerUi, swaggerDocs } from './swaggerUi';
 
 const app = express()
 
@@ -13,6 +14,8 @@ app.use(cors())
 app.use(fileUpload({
     limits: { fileSize: 50 * 1024 * 1024 },
 }))
+
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs))
 
 app.use(router)
 
